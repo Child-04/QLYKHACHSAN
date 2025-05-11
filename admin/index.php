@@ -1,5 +1,11 @@
 <?php
-  require('inc/db_config.php');
+    require('inc/essentials.php');
+    require('inc/db_config.php');
+    session_start();
+    if(!(isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true))
+    {
+        redirext('dashboard.php');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -43,16 +49,16 @@ if (isset($_POST['login'])) {
     $frm_data = filteration($_POST);
     $query = "SELECT * FROM `admin_cred` WHERE `admin_name`=? AND `admin_pass`=?";
     $values = [$frm_data['admin_name'], $frm_data['admin_pass']];
+
     $res = select($query, $values, "ss");
-
     if($res->num_rows==1){
-        echo <<<alert
-
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        alert;
+        $row = mysqli_fetch_assoc($res);
+        $_SESSION['adminLogin'] = true;
+        $_SESSION['adminId'] = $row['sr_no'];
+       redirext("dashboard.php");
+    }
+    else{
+        alert('error','Login failed - Invalid Credentails');
     }
 }
 

@@ -8,7 +8,7 @@
     $con = mysqli_connect($hname, $uname, $pass, $db);
 
     if(!$con){
-        die("Cannot Connect to Database".mysql_connect_error());
+        die("Cannot Connect to Database".mysqli_connect_error());
     }
 
     function filteration($data){
