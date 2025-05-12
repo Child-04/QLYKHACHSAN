@@ -14,12 +14,15 @@
     <?php require('inc/links.php') ?>
 </head>
 <body class="bg-light">
-    
-    <div class="container-fluid bg-dark text-light p-3 d-flex align-items-center justify-content-between">
-        <h3 class="mb-0">ADMIN PANEL</h3>
-        <a href="logout.php" class ="btn btn-light btn-sm">LOG OUT</a>
-    </div>
 
+    <?php require('inc/header.php'); ?>
+    <div class="container-fluid " id="main-content">
+        <div class="row">
+            <div class="col-lg-10 ms-auto p-4 overflow-hidden">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis, earum laboriosam non a ipsam suscipit ex explicabo fugit quisquam repellendus voluptatum incidunt neque nostrum provident, eveniet magnam fugiat sint!
+            </div>
+        </div>
+    </div>
 
 
 
