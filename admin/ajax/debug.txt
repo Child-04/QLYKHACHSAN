@@ -1,4 +1,4 @@
 Array
 (
-    [get_general] => 1
+    [get_contacts] => 
 )
