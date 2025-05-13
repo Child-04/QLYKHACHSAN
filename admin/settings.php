@@ -165,7 +165,7 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label ">Address</label>
-                                                <input type="text" name="adress" id="adress_inp" class="form-control shadow-none" required >
+                                                <input type="text" name="address" id="address_inp" class="form-control shadow-none" required >
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label ">Google Map Link</label>
@@ -215,6 +215,53 @@
                             <div class="modal-footer">
                                 <button type="button" onclick="contacts_inp(contacts_data)" class="btn text-secondary shadow-none" data-bs-dismiss="modal">CANCEL</button>
                                 <button type="submit" class="btn custom-bg text-white shadow-none">SUBMIT</button>
+                            </div>
+                        </div> 
+                        </form>
+                        
+                    </div>
+                </div>
+
+                <!-- Management team section -->
+
+                <div class="card border-0 shadow-sm mb-4" >
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="card-title m-0">Management Team</h5>
+                            <button type="button" class="btn btn-dark shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#team-s">
+                               <i class="bi bi-plus-square"></i> Add
+                            </button>
+                        </div>
+                        
+                        <div class="row" id="team-data">
+
+
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Management team modals -->
+
+                <div class="modal fade" id="team-s" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="team_s_form">
+                           <div class="modal-content">
+                            <div class="modal-header">
+                               <h5 class="modal-title">Add Team Member</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="member_name" id="member_name_inp" class="form-control shadow-none" >
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Picture</label>
+                                    <input type="file" name="member_picture" id="member_picture_inp" accept="[.jpg, .png, .webp, .jpeg]" class="form-control shadow-none" >
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" onclick="" class="btn text-secondary shadow-none" data-bs-dismiss="modal">CANCEL</button>
+                                <button type="button" onclick="upd_general(site_title.value,site_about.value)" class="btn custom-bg text-white shadow-none">SUBMIT</button>
                             </div>
                         </div> 
                         </form>
@@ -291,7 +338,7 @@
 
         xhr.onload = function(){
 
-            var myModalEl = document.getElementById('general-s');
+            var myModal = document.getElementById('general-s');
             var modal = bootstrap.Modal.getInstance(myModal) 
             modal.hide();
             
@@ -405,6 +452,44 @@
         }
 
         xhr.send(data_str)
+    }
+
+
+    // Management team modals 
+    let team_s_form = document.getElementById('team_s_form');
+    let member_name_inp = document.getElementById('member_name_inp');
+    let member_picture_inp = document.getElementById('member_picture_inp');
+
+    team_s_form.addEventListener('submit', function(e){
+        e.preventDefault();
+        add_member();
+    });
+
+    function add_member(){
+        let data = new FormData();
+        data.append('name', member_name_inp.value);
+        data.append('picture', member_picture_inp.files[0]);
+        data.append('add_member', '');
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/settings_crud.php", true); 
+
+        xhr.onload = function(){
+            console.log(this.responseText);
+        //     var myModal = document.getElementById('general-s');
+        //     var modal = bootstrap.Modal.getInstance(myModal);
+        //     modal.hide();
+
+        //     if(this.responseText == 0){
+        //     alert('success', 'Changes saved!');
+        //     get_general();
+        //    }
+        //    else{
+        //     alert('error','no changes made');
+        //    }
+        }
+
+        xhr.send('data');
     }
 
     window.onload = function(){

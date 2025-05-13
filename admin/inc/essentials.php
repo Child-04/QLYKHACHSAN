@@ -1,7 +1,10 @@
 <?php
 
+define('UPLOAD_IMAGE_PATH',$_SERVER['DOCUMENT_ROOT'].'/QLYKHACHSAN/images/');
+define('ABOUT_FOLDER','about/');
 function adminLogin()
  {
+    
     session_start();
     if(!(isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true))
     {
@@ -13,12 +16,13 @@ function adminLogin()
     }
  }
 
-function redirext($url){
+ 
+function redirect($url){
     echo "
     <script>
         window.location.href='$url'
     </script>";
-    exit;
+    exit();
 
 }
 
@@ -32,5 +36,31 @@ function alert($type, $msg){
         </div>
     alert;
 }
+// Management team modals 
+function uploadImage($image,$folder)
+{
+    $valid_mine = ['image/jpeg','image/png','image/webp'];
+    $img_mine = $image['type'];
+
+    if(in_array($img_mine,$valid_mine)){
+        return 'inv_img'; //invalid image mine or format
+    }
+    else if(($image['size']/(1024*1024))>2){
+        return 'inv_size'; //invalid size greater than 2mb
+    }
+    else{
+        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+        $rname = 'IMG_'.random_int(11111,99999).".$ext";
+
+        $img_path = UPLOAD_IMAGE_PATH.$folder.$rname;
+        if(move_uploaded_file($image["tmp_name"], $img_path)){
+            return $rname;
+        }
+        else{
+           return 'upd_failed'; 
+        }
+    }
+}
+
 
 ?>

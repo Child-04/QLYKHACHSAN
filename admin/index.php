@@ -2,10 +2,14 @@
     require('inc/essentials.php');
     require('inc/db_config.php');
     session_start();
-    if(!(isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true))
-    {
-        redirext('dashboard.php');
+
+    // Nếu đã đăng nhập thì chuyển sang dashboard
+    if (isset($_SESSION['adminLogin']) && $_SESSION['adminLogin'] == true) {
+        redirect('dashboard.php');
+        exit();
     }
+   
+
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +59,8 @@ if (isset($_POST['login'])) {
         $row = mysqli_fetch_assoc($res);
         $_SESSION['adminLogin'] = true;
         $_SESSION['adminId'] = $row['sr_no'];
-       redirext("dashboard.php");
+       redirect("dashboard.php");
+       exit();
     }
     else{
         alert('error','Login failed - Invalid Credentails');

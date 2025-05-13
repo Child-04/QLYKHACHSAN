@@ -1,4 +1,6 @@
 Array
 (
-    [get_contacts] => 
+    [site_title] => undefined
+    [site_about] => undefined
+    [upd_general] => 
 )
