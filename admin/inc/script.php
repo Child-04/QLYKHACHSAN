@@ -13,23 +13,23 @@
     document.body.append(element);
     }
     
-    function setActive()
-  {
-    let navbar = document.getElementById('dashboard-menu');
-    let a_tag = navbar.getElementsByTagName('a');
+    function setActive() {
+      let navbar = document.getElementById('dashboard-menu');
+      let a_tag = navbar.getElementsByTagName('a');
 
-    for(i=0; i<a_tag.length; i++)
-    {
+      let currentFile = window.location.pathname.split('/').pop();
 
-      let file = a_tag[i].href.split('/').pop();
-      let file_name = file.split('.')[0];
+      for (let i = 0; i < a_tag.length; i++) {
+        let linkFile = a_tag[i].href.split('/').pop();
 
-      if(document.location.href.indexOf(file_name) >= 0){
-        a_tag[i].classList.add('acyive');
+        if (linkFile === currentFile) {
+          a_tag[i].classList.add('active');
+        } else {
+          a_tag[i].classList.remove('active'); 
+        }
       }
-
     }
-  }
 
-  setActive();
+    setActive();
+
     </script>

@@ -45,7 +45,7 @@
       let file_name = file.split('.')[0];
 
       if(document.location.href.indexOf(file_name) >= 0){
-        a_tag[i].classList.add('acyive');
+        a_tag[i].classList.add('active');
       }
 
     }
