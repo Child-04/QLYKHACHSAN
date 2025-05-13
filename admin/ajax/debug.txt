@@ -1,6 +1,4 @@
 Array
 (
-    [site_title] => undefined
-    [site_about] => undefined
-    [upd_general] => 
+    [get_members] => 
 )

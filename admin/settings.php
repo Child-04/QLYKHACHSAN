@@ -234,7 +234,20 @@
                         </div>
                         
                         <div class="row" id="team-data">
+                            <div class="col-md-2 mb-3">
+                                <div class="card bg-dark text-white">
+                                    <img src="../images/about/IMG_17352.jpg" class="card-img">
+                                    <div class="card-img-overlay text-end">
+                                        <button type="button" class="btn btn-danger btn-sm shadow-none">
+                                        <i class="bi bi-trash3"></i> Delete
+                                        </button>
+                                    </div>
 
+                                        <p class="card-text text-center px-3 py-2">Random name</p>
+               
+                                </div>
+
+                            </div>
 
                         </div>
                         
@@ -260,7 +273,7 @@
                                     <input type="file" name="member_picture" id="member_picture_inp" accept="[.jpg, .png, .webp, .jpeg]" class="form-control shadow-none" >
                                 </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="" class="btn text-secondary shadow-none" data-bs-dismiss="modal">CANCEL</button>
+                                <button type="button" onclick="member_name.value='', member_picture.value =''" class="btn text-secondary shadow-none" data-bs-dismiss="modal">CANCEL</button>
                                 <button type="button" onclick="upd_general(site_title.value,site_about.value)" class="btn custom-bg text-white shadow-none">SUBMIT</button>
                             </div>
                         </div> 
@@ -319,10 +332,7 @@
             }
         }
 
-
-
-        xhr.send('get_general=1');
-
+        xhr.send('get_general');
     }
 
     general_s_form.addEventListener('submit', function(e){
@@ -475,27 +485,68 @@
         xhr.open("POST", "ajax/settings_crud.php", true); 
 
         xhr.onload = function(){
-            console.log(this.responseText);
-        //     var myModal = document.getElementById('general-s');
-        //     var modal = bootstrap.Modal.getInstance(myModal);
-        //     modal.hide();
+            var myModal = document.getElementById('team-s');
+            var modal = bootstrap.Modal.getInstance(myModal);
+            modal.hide();
 
-        //     if(this.responseText == 0){
-        //     alert('success', 'Changes saved!');
-        //     get_general();
-        //    }
-        //    else{
-        //     alert('error','no changes made');
-        //    }
+            if(this.responseText == 'inv_img'){
+                alert('error', 'Only JPG and PNG images are allowed!');
+            }
+            else if(this.responseText == 'inv_size'){
+                alert('error', 'Image should be less than 2MB!');
+            }
+            else if(this.responseText == 'udp_failed'){
+                alert('error', 'Image upload failed. Server Down!');
+            }
+            else{
+                alert('success', 'Member added!');
+                member_name_inp.value='';
+                member_picture_inp.value='';
+            }
         }
 
         xhr.send('data');
     }
 
+    function get_members()
+    {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/settings_crud.php", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+           document.getElementById('team-data').innerHTML = this.responseText;
+        }
+
+        xhr.send('get_members');
+    }
+
+    function rem_member(val)
+    {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/settings_crud.php", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onload = function(){
+           if(this.responseText==1){
+            alert('success', 'Member removed!');
+            get_members();
+           }
+           else{
+            alert('error', 'Failed to remove member!');
+           }
+        }
+
+        xhr.send('rem_member'+val);
+    }
+
+
+
     window.onload = function(){
             get_general();
             get_contacts();
-        } 
+            get_members();
+    } 
 
 </script>
 </body>
