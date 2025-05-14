@@ -104,6 +104,83 @@
         </div>
       
 
+        <div class="col-lg-6 col-md-6 mb-5 px-4">
+          <div class="bg-white rounded shadow p-4">
+            <form method="POST">
+              <h5>Send a message</h5>
+              <div class="mb-3">
+                <label class="form-label" style="font-weight:500;">Name</label>
+                <input name="name" required type="text" class="form-control shadow-none" >
+              </div>
+              <div class="mb-3">
+                <label class="form-label" style="font-weight:500;">Email</label>
+                <input name="email" required type="email" class="form-control shadow-none" >
+              </div>
+              <div class="mb-3">
+              <label class="form-label" style="font-weight:500;">Subject</label>
+              <input name="subject" required type="text" class="form-control shadow-none" >
+              </div>
+              <div class="mb-3">
+                <label class="form-label" style="font-weight:500;">Message</label>
+                <textarea name="message" required class="form-control shadow-none" rows="5" style="resize: none;"></textarea>
+              </div>
+              <button type="submit" name="send" class="btn text-black custom-bg mt-3">SEND</button>
+            </form>
+          </div>
+        </div>
+      
+
+      <?php
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
+        $conn = new mysqli("localhost", "root", "", "hotelwebsite");
+        if ($conn->connect_error) {
+            die("Kết nối thất bại: " . $conn->connect_error);
+        }
+
+        function filteration($data) {
+            foreach($data as $key => $val){
+                $data[$key] = trim($val);
+                $data[$key] = stripslashes($val);
+                $data[$key] = htmlspecialchars($val);
+            }
+            return $data;
+        }
+
+        function insert($query, $values, $datatypes) {
+            global $conn;
+            $stmt = $conn->prepare($query);
+            if ($stmt === false) return 0;
+
+            $stmt->bind_param($datatypes, ...$values);
+            return $stmt->execute() ? 1 : 0;
+        }
+
+        function alert($type, $msg) {
+            $color = ($type == 'success') ? 'green' : 'red';
+            echo "<script>alert('$msg');</script>";
+        }
+
+        if(isset($_POST['send']))
+        {
+            $frm_data = filteration($_POST);
+
+            $q = "INSERT INTO `user_queries`(`name`, `email`, `subject`, `message`) VALUES (?,?,?,?)";
+            $values = [$frm_data['name'], $frm_data['email'], $frm_data['subject'], $frm_data['message']];
+
+            $res = insert($q, $values, 'ssss');
+            if($res==1){
+                alert('success', 'Mail sent!');
+            }
+            else{
+                alert('error', 'Server Down! Try again later.');
+            }
+        }
+    ?>
+
+
 
     </div>
   </div>

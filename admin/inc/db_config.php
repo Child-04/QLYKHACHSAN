@@ -97,5 +97,16 @@
         }
     }
 
+    // function delete($sql, $values, $datatypes)
+    //   {
+    //       $con = $GLOBALS['con'];
+    //       $stmt = mysqli_prepare($con, $sql);
+    //       if ($stmt) {
+    //           mysqli_stmt_bind_param($stmt, $datatypes, ...$values);
+    //           return mysqli_stmt_execute($stmt);
+    //       }
+    //       return false;
+    //   }
+
     
 ?>

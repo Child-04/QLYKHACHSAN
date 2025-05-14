@@ -1,4 +1,4 @@
 Array
 (
-    [add_image] => 1
+    [get_carousel] => 
 )
