@@ -1,4 +1,4 @@
 Array
 (
-    [get_contacts] => 
+    [add_image] => 1
 )

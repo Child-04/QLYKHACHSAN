@@ -2,8 +2,13 @@
 
 define('SITE_URL','http://localhost/hotelwebsite/');
 define('ABOUT_IMG_PATH', SITE_URL.'images/about/');
+define('CAROUSEL_IMG_PATH', SITE_URL.'images/carousel/');
+
+
 define('UPLOAD_IMAGE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/QLYKHACHSAN/images/');
 define('ABOUT_FOLDER', 'about/');
+define('CAROUSEL_FOLDER', 'carousel/');
+
 
 function adminLogin()
 {
